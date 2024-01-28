@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Page</title>
+</head>
+<body>
+    <div class="main">
+        <h2>Present Candidate for Web Development Interview</h2>
+        <form action="/domian/webdev/interview/random">
+            <button type="submit">Random Call For Interview</button>
+        </form>
+        <ol>
+            <% for(d of data) {%>
+                <li><%= d.name %></li>
+                <form action="/domian/webdev/<%= d._id %>/interview/open">
+                    <button>Take Interview</button>
+                </form>
+
+                <% } %>
+        </ol>
+
+
+    </div>
+</body>
+</html>

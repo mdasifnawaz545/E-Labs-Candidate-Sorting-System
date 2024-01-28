@@ -42,7 +42,6 @@ const validation=async(req,res,next)=>{
 
 }
 
-
 // Listening to Port
 
 app.listen(port, (req, res) => {
@@ -69,9 +68,9 @@ app.get("/form",(req,res)=>{
 
 // Home Page Route
 
-app.get("/domains",(req, res) => {
+app.get("/domain",(req, res) => {
     try {
-        res.send("reactPage");
+        res.render("reactPage.ejs");
     }
     catch (err) {
         console.log(err.error);
@@ -100,13 +99,54 @@ let initData=()=>{
         anythingElse:"Nothing",
     });
     student_1.save();
-
 }
 
 // initData();
 
 // Respective Domain Route
 
+
+// Web Development Domain
+
 app.get("/domain/webdev",async(req,res)=>{
-let data=await Student.find();
+let data=await Student.find({domain:"Web Development"});
+res.render("webdev.ejs",{data})
+})
+
+// App Development Domain
+
+app.get("/domain/appdev",async(req,res)=>{
+let data=await Student.find({domain:"App Development"});
+res.render("appdev.ejs",{data})
+})
+
+app.get("/domain/webdev/:id/attendance",(req,res)=>{
+    let {id}=req.params;
+    console.log(id)
+    let data=Student.findByIdAndUpdate(id,{present:true});
+    res.redirect("/domain/webdev");
+    
+})
+
+app.get("/domain/webdev/interview",(req,res)=>{
+    let data=Student.find({$and:[{present:true},{interviewed:false}]});
+    res.render("interview.ejs",{data});
+})
+
+
+app.get("/domian/webdev/:id/interview/open",(req,res)=>{
+    let data=Student.findById(id);
+    res.render("interviewPopup.ejs",{data});
+})
+
+
+app.get("/domian/webdev/interview/random",(req,res)=>{
+    let data=Student.findOne({$and:[{present:true},{interviewed:false}]});
+    res.render("interviewPopup.ejs",{data});
+    
+})
+
+app.get("/domain/webdev/:id/interviewed",(req,res)=>{
+    let {id}=req.params;
+    let data=Student.findByIdAndUpdate(id,{interviewed:true})
 })
