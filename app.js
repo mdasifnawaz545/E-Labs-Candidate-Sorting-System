@@ -82,7 +82,7 @@ let initData=()=>{
     let student_1=new Student({
         domain:["Web Development","App Development"],
         kiitemail:"22052736@kiit.ac.in",
-        name:"Md Asif Nawaz",
+        name:"MOHAMMAD ASIF NAWAZ",
         email:"mdasifnawaz545@gmail.com",
         roll:"22052736",
         gender:"Male",
@@ -120,33 +120,35 @@ let data=await Student.find({domain:"App Development"});
 res.render("appdev.ejs",{data})
 })
 
-app.get("/domain/webdev/:id/attendance",(req,res)=>{
+app.get("/domain/webdev/:id/attendance",async(req,res)=>{
     let {id}=req.params;
     console.log(id)
-    let data=Student.findByIdAndUpdate(id,{present:true});
+    let data=await Student.findByIdAndUpdate(id,{present:true});
     res.redirect("/domain/webdev");
     
 })
 
-app.get("/domain/webdev/interview",(req,res)=>{
-    let data=Student.find({$and:[{present:true},{interviewed:false}]});
+app.get("/domain/webdev/interview",async(req,res)=>{
+    let data=await Student.find({$and:[{present:true},{interviewed:false}]});
     res.render("interview.ejs",{data});
 })
 
 
-app.get("/domian/webdev/:id/interview/open",(req,res)=>{
-    let data=Student.findById(id);
+app.get("/domian/webdev/:id/interview/open",async(req,res)=>{
+    let {id}=req.params;
+    let data=await Student.findById(id);
     res.render("interviewPopup.ejs",{data});
 })
 
 
-app.get("/domian/webdev/interview/random",(req,res)=>{
-    let data=Student.findOne({$and:[{present:true},{interviewed:false}]});
+app.get("/domian/webdev/interview/random",async(req,res)=>{
+    let data=await Student.findOne({$and:[{present:true},{interviewed:false}]});
     res.render("interviewPopup.ejs",{data});
     
 })
 
-app.get("/domain/webdev/:id/interviewed",(req,res)=>{
+app.get("/domain/webdev/:id/interviewed",async(req,res)=>{
     let {id}=req.params;
-    let data=Student.findByIdAndUpdate(id,{interviewed:true})
+    let data=await Student.findByIdAndUpdate(id,{interviewed:true})
+    res.redirect("/domain/webdev/interview")
 })
