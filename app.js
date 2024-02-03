@@ -50,7 +50,7 @@ app.listen(port, (req, res) => {
 
 // Home Route
 app.get("/", (req, res) => {
-    res.send("Salaam...");
+    res.send("Elabs");
 })
 
 
